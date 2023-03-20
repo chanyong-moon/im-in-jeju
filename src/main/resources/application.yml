@@ -1,0 +1,10 @@
+imin:
+  jeju:
+    provider:
+      kakao:
+        request-size: 5
+        api-key: KakaoAK e140ea5e34746b9778dccd2631b382d3
+      naver:
+        request-size: 5
+        api-key: kvN88UoRxdxW6rpFYivh
+        secret: 8PpQMn8C0W
