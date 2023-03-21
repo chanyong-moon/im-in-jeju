@@ -1,7 +1,7 @@
 package imin.jeju.iminjeju.configuration
 
-import imin.jeju.iminjeju.port.provider.KakaoLocationApiPort
-import imin.jeju.iminjeju.port.provider.NaverLocationApiPort
+import imin.jeju.iminjeju.api.port.provider.KakaoLocationApiPort
+import imin.jeju.iminjeju.api.port.provider.NaverLocationApiPort
 import kotlinx.serialization.json.Json
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

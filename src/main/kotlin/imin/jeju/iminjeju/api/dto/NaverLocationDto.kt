@@ -1,4 +1,4 @@
-package imin.jeju.iminjeju.dto
+package imin.jeju.iminjeju.api.dto
 
 import kotlinx.serialization.Serializable
 
@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class NaverLocationDto(
     val items: List<Item>,
 
-)
+    )
 
 @Serializable
 data class Item(

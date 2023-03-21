@@ -1,4 +1,4 @@
-package imin.jeju.iminjeju.dto
+package imin.jeju.iminjeju.api.dto
 
 data class Location(
     var name: String,

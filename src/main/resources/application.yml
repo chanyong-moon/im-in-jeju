@@ -1,13 +1,19 @@
 imin:
   jeju:
-    provider:
-      kakao:
-        request-size: 5
-        api-key: KakaoAK e140ea5e34746b9778dccd2631b382d3
-      naver:
-        request-size: 5
-        api-key: kvN88UoRxdxW6rpFYivh
-        secret: 8PpQMn8C0W
-    integration:
-      redis:
-        pub-sub-channel: increase-view
+    api:
+      provider:
+        kakao:
+          request-size: 5
+          api-key: KakaoAK e140ea5e34746b9778dccd2631b382d3
+        naver:
+          request-size: 5
+          api-key: kvN88UoRxdxW6rpFYivh
+          secret: 8PpQMn8C0W
+
+    counter:
+      # 오차율 0.001
+      depth: 5 # hash function 개수
+      width: 2000
+      minute-threshold: 1 # 수집 단위 (5, 30, 60) 등 60으로 나눌때 나머지가 없는 수
+      ranking-size: 10 # 총 개수
+      cache-times: 2

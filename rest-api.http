@@ -1,3 +1,8 @@
+GET http://localhost:8080/locations/rank
+Accept: application/json
+
+###
+
 GET http://localhost:8080/locations/search?keyword=고래의바다
 Accept: application/json
 
@@ -10,5 +15,34 @@ Accept: application/json
 
 GET http://localhost:8080/locations/search?keyword=안나올만한키워드
 Accept: application/json
+
+###
+
+
+GET http://localhost:8080/locations/search?keyword=a
+
+###
+GET http://localhost:8080/locations/search?keyword=b
+
+###
+GET http://localhost:8080/locations/search?keyword=c
+
+###
+GET http://localhost:8080/locations/search?keyword=d
+
+###
+GET http://localhost:8080/locations/search?keyword=e
+
+###
+GET http://localhost:8080/locations/search?keyword=f
+
+###
+GET http://localhost:8080/locations/search?keyword=g
+
+###
+GET http://localhost:8080/locations/search?keyword=h
+
+###
+GET http://localhost:8080/locations/search?keyword=i
 
 ###

@@ -35,8 +35,17 @@ class RedisConfig {
     }
 
     @Bean
-    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any>? {
+    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
         val redisTemplate = RedisTemplate<String, Any>()
+        redisTemplate.setConnectionFactory(redisConnectionFactory)
+        redisTemplate.keySerializer = StringRedisSerializer()
+        redisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer()
+        return redisTemplate
+    }
+
+    @Bean
+    fun cmsRedisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Int> {
+        val redisTemplate = RedisTemplate<String, Int>()
         redisTemplate.setConnectionFactory(redisConnectionFactory)
         redisTemplate.keySerializer = StringRedisSerializer()
         redisTemplate.valueSerializer = GenericJackson2JsonRedisSerializer()

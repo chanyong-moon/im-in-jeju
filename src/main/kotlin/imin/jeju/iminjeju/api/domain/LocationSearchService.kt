@@ -1,17 +1,18 @@
-package imin.jeju.iminjeju.domain
+package imin.jeju.iminjeju.api.domain
 
-import imin.jeju.iminjeju.dto.Location
+import imin.jeju.iminjeju.api.dto.Location
 import imin.jeju.iminjeju.extentions.trimTags
-import imin.jeju.iminjeju.port.LocationSearchPort
-import imin.jeju.iminjeju.port.LocationProviderPort
+import imin.jeju.iminjeju.api.port.LocationSearchPort
+import imin.jeju.iminjeju.api.port.LocationProviderPort
+import imin.jeju.iminjeju.counter.port.TopSearchedViewCounterPort
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
 @Service
 class LocationSearchService(
-    @Value("\${imin.jeju.total-search-result-size: 10}") val totalLocaionCount: Int,
+    @Value("\${imin.jeju.api.total-search-result-size: 10}") val totalLocaionCount: Int,
     val providers: List<LocationProviderPort>,
-    val topSearchedLocationService: TopSearchedLocationService,
+    val topSearchedViewCounterPort: TopSearchedViewCounterPort,
 ) : LocationSearchPort {
     override fun search(keyword: String): List<Location> {
         // 검색
@@ -23,7 +24,7 @@ class LocationSearchService(
 
         // increaseViewCount
         // viewcount 증가 # redis
-        topSearchedLocationService.increaseViewCount(keyword)
+        topSearchedViewCounterPort.increaseViewCount(keyword)
         return locations(locationSetList.flatten())
     }
 

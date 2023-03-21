@@ -1,6 +1,6 @@
-package imin.jeju.iminjeju.port
+package imin.jeju.iminjeju.api.port
 
-import imin.jeju.iminjeju.dto.Location
+import imin.jeju.iminjeju.api.dto.Location
 import org.springframework.stereotype.Service
 
 @Service
