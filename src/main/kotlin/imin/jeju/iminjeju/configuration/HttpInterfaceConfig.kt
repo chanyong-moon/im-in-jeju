@@ -12,7 +12,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory
 
 
 @Configuration
-class HttpInterfaceConfiguration {
+class HttpInterfaceConfig {
     @Bean
     fun messageConverter(): KotlinSerializationJsonDecoder {
         return KotlinSerializationJsonDecoder(Json {

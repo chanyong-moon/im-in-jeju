@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service
 
 @Service
 class LocationSearchService(
-    val providers: List<LocationProviderPort>,
     @Value("\${imin.jeju.total-search-result-size: 10}") val totalLocaionCount: Int,
+    val providers: List<LocationProviderPort>,
+    val topSearchedLocationService: TopSearchedLocationService,
 ) : LocationSearchPort {
     override fun search(keyword: String): List<Location> {
         // 검색
@@ -22,6 +23,7 @@ class LocationSearchService(
 
         // increaseViewCount
         // viewcount 증가 # redis
+        topSearchedLocationService.increaseViewCount(keyword)
         return locations(locationSetList.flatten())
     }
 
@@ -54,12 +56,5 @@ class LocationSearchService(
             .filter { it.value > 1 }
             .map { it.key }
             .toSet()
-    }
-
-    /**
-     * Increase view count
-     * ChainedTransactionManager 사용
-     */
-    private fun increaseViewCount() {
     }
 }

@@ -8,3 +8,6 @@ imin:
         request-size: 5
         api-key: kvN88UoRxdxW6rpFYivh
         secret: 8PpQMn8C0W
+    integration:
+      redis:
+        pub-sub-channel: increase-view
