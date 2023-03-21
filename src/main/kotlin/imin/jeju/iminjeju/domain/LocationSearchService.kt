@@ -6,11 +6,13 @@ import imin.jeju.iminjeju.port.LocationSearchPort
 import imin.jeju.iminjeju.port.LocationProviderPort
 import imin.jeju.iminjeju.port.TopSearchedViewCounterPort
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
 
 @Service
 class LocationSearchService(
-    @Value("\${imin.jeju.api.total-search-result-size: 10}") val totalLocaionCount: Int,
+    @Value("\${imin.jeju.search.max-result-size: 10}") val totalLocaionCount: Int,
     val providers: List<LocationProviderPort>,
     val topSearchedViewCounterPort: TopSearchedViewCounterPort,
 ) : LocationSearchPort {
@@ -18,12 +20,17 @@ class LocationSearchService(
         // 검색
         val locationSetList = providers.map { provider ->
             return@map provider.locations(keyword)
-                .onEach { location -> location.name = normalizeName(location.name) }
-                .toSet()
+                ?.onEach { location -> location.name = normalizeName(location.name) }
+                ?.toSet()
+        }
+
+        val allProviderUnAvailable = locationSetList.all { it == null }
+        if (allProviderUnAvailable) {
+            throw ResponseStatusException(HttpStatusCode.valueOf(500), "모든 location provider를 이용할 수 없습니다.")
         }
 
         topSearchedViewCounterPort.increaseViewCount(keyword)
-        return locations(locationSetList.flatten())
+        return locations(locationSetList.filterNotNull().flatten())
     }
 
     private fun normalizeName(name: String): String = name.trim().trimTags()

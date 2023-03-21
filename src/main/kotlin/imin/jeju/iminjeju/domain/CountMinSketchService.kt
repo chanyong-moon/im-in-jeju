@@ -14,11 +14,11 @@ const val TOTAL_COUNT_SKETCH = "total:sketch"
 
 @Service
 class CountMinSketchService(
-    @Value("\${imin.jeju.counter.depth}") val depth: Int,
-    @Value("\${imin.jeju.counter.width}") val width: Int,
-    @Value("\${imin.jeju.counter.cache-times}") val cacheTimes: Int,
-    @Value("\${imin.jeju.counter.minute-threshold}") val minuteThreshold: Int,
-    @Value("\${imin.jeju.counter.ranking-size}") val rankingSize: Long,
+    @Value("\${imin.jeju.rank.depth}") val depth: Int,
+    @Value("\${imin.jeju.rank.width}") val width: Int,
+    @Value("\${imin.jeju.rank.cache-times}") val cacheTimes: Int,
+    @Value("\${imin.jeju.rank.minute-threshold}") val minuteThreshold: Int,
+    @Value("\${imin.jeju.rank.ranking-size}") val rankingSize: Long,
     val cmsRedisTemplate: RedisTemplate<String, Int>,
     val redisTemplate: RedisTemplate<String, String>,
 ) : TopSearchedViewCounterPort {
@@ -79,7 +79,7 @@ class CountMinSketchService(
             .mapNotNull { tup -> if (tup.value != null && tup.score != null) RankDto(tup.value!!, tup.score!!.toLong()) else null }
     }
 
-    @Scheduled(cron = "1 */\${imin.jeju.counter.minute-threshold} * * * *")
+    @Scheduled(cron = "1 */\${imin.jeju.rank.minute-threshold} * * * *")
     fun updateSketch() {
         val removeDiff = "${sketchName(LocalDateTime.now().minusMinutes(minuteThreshold.toLong() * (cacheTimes)))}:diff"
 
@@ -127,7 +127,6 @@ class CountMinSketchService(
 
         return with(indexes) {
             // update total sketch
-
             val counts = (cmsRedisTemplate.opsForValue().multiGet(map { "$TOTAL_COUNT_SKETCH:${it.first}:${it.second}" }) as? List<Long>) ?: map { 0L }
             counts.min()
         }

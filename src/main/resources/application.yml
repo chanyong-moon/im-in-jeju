@@ -1,6 +1,7 @@
 imin:
   jeju:
-    api:
+    search:
+      max-result-size: 2
       provider:
         kakao:
           request-size: 5
@@ -10,10 +11,10 @@ imin:
           api-key: kvN88UoRxdxW6rpFYivh
           secret: 8PpQMn8C0W
 
-    counter:
+    rank:
       # 오차율 0.001
       depth: 5 # hash function 개수
       width: 2000
       minute-threshold: 1 # 수집 단위 (5, 30, 60) 등 60으로 나눌때 나머지가 없는 수
-      ranking-size: 10 # 총 개수
-      cache-times: 2
+      ranking-size: 10 # 응답할 rank의 수
+      cache-times: 2 # minute-threshold * cache-times(분) 동안의 요청만 검색 키워드 목록에 응답한다.
