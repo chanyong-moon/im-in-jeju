@@ -19,8 +19,8 @@ class CountMinSketchService(
     @Value("\${imin.jeju.counter.cache-times}") val cacheTimes: Int,
     @Value("\${imin.jeju.counter.minute-threshold}") val minuteThreshold: Int,
     @Value("\${imin.jeju.counter.ranking-size}") val rankingSize: Long,
-    val redisTemplate: RedisTemplate<String, String>,
     val cmsRedisTemplate: RedisTemplate<String, Int>,
+    val redisTemplate: RedisTemplate<String, String>,
 ) : TopSearchedViewCounterPort {
     private val hashFunction: HashFunction = HashFunction()
 
@@ -37,20 +37,23 @@ class CountMinSketchService(
                     cnt = minOf(cmsRedisTemplate.opsForValue().increment(it) ?: 1, cnt)
                 }
 
-            // update diff sketch
+            // update each sketch
             val sketch = sketchName()
             forEach { (i, j) ->
                 cmsRedisTemplate.opsForValue().increment("${sketch}:diff:$i:$j")
             }
         }
 
-        updateTopSearched(keyword, cnt)
-        updateTopSearched(keyword, cnt, sketchName())
+        // update total:rank
+        updateRank(keyword, cnt)
+
+        // {sketchName}:rank
+        updateRank(keyword, cnt, sketchName())
 
         return cnt
     }
 
-    private fun updateTopSearched(keyword: String, cnt: Long, sketch: String = "total") {
+    private fun updateRank(keyword: String, cnt: Long, sketch: String = "total") {
         val rankKey = "${sketch}:rank"
 
         with(redisTemplate.opsForZSet()) {
@@ -80,7 +83,7 @@ class CountMinSketchService(
     fun updateSketch() {
         val removeDiff = "${sketchName(LocalDateTime.now().minusMinutes(minuteThreshold.toLong() * (cacheTimes)))}:diff"
 
-        // copy new
+        // update sketch
         with(cmsRedisTemplate.opsForValue()) {
             for (i in 0 until depth) {
                 val keys = (0 until width).map { "$removeDiff:$i:$it" }
@@ -112,7 +115,7 @@ class CountMinSketchService(
                 if (deleteKeyword.isNotEmpty()) redisTemplate.opsForZSet().remove("total:rank", *deleteKeyword.toTypedArray())
 
                 forEach { (keyword, cnt) ->
-                    updateTopSearched(keyword, cnt)
+                    updateRank(keyword, cnt)
                 }
             }
 

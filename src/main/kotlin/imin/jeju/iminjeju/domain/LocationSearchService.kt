@@ -22,8 +22,6 @@ class LocationSearchService(
                 .toSet()
         }
 
-        // increaseViewCount
-        // viewcount 증가 # redis
         topSearchedViewCounterPort.increaseViewCount(keyword)
         return locations(locationSetList.flatten())
     }
