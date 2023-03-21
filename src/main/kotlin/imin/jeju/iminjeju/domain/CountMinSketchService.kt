@@ -1,8 +1,8 @@
-package imin.jeju.iminjeju.counter.domain
+package imin.jeju.iminjeju.domain
 
-import imin.jeju.iminjeju.api.dto.Rank
-import imin.jeju.iminjeju.counter.port.TopSearchedViewCounterPort
-import imin.jeju.iminjeju.counter.util.HashFunction
+import imin.jeju.iminjeju.dto.RankDto
+import imin.jeju.iminjeju.port.TopSearchedViewCounterPort
+import imin.jeju.iminjeju.util.HashFunction
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.core.ZSetOperations
@@ -69,17 +69,16 @@ class CountMinSketchService(
         return time.withMinute(previousMinute).withSecond(0).withNano(0).toString()
     }
 
-    override fun findTopSearchedKeywords(): List<Rank> {
+    override fun findTopSearchedKeywords(): List<RankDto> {
         val key = "total:rank"
 
         return (redisTemplate.opsForZSet().reverseRangeWithScores(key, 0, rankingSize) as Set<ZSetOperations.TypedTuple<String>>)
-            .mapNotNull { tup -> if (tup.value != null && tup.score != null) Rank(tup.value!!, tup.score!!.toLong()) else null }
+            .mapNotNull { tup -> if (tup.value != null && tup.score != null) RankDto(tup.value!!, tup.score!!.toLong()) else null }
     }
 
     @Scheduled(cron = "1 */\${imin.jeju.counter.minute-threshold} * * * *")
-    fun renewTable() {
+    fun updateSketch() {
         val removeDiff = "${sketchName(LocalDateTime.now().minusMinutes(minuteThreshold.toLong() * (cacheTimes)))}:diff"
-
 
         // copy new
         with(cmsRedisTemplate.opsForValue()) {

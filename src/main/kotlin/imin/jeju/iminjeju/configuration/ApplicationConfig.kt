@@ -1,8 +1,8 @@
 package imin.jeju.iminjeju.configuration
 
-import imin.jeju.iminjeju.api.domain.provider.KakaoProvider
-import imin.jeju.iminjeju.api.domain.provider.NaverProvider
-import imin.jeju.iminjeju.api.port.LocationProviderPort
+import imin.jeju.iminjeju.domain.provider.KakaoProvider
+import imin.jeju.iminjeju.domain.provider.NaverProvider
+import imin.jeju.iminjeju.port.LocationProviderPort
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.EnableScheduling

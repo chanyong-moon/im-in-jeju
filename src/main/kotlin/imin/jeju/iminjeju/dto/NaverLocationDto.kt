@@ -1,4 +1,4 @@
-package imin.jeju.iminjeju.api.dto
+package imin.jeju.iminjeju.dto
 
 import kotlinx.serialization.Serializable
 

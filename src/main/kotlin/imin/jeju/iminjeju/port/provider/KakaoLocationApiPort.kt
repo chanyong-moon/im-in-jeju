@@ -1,6 +1,6 @@
-package imin.jeju.iminjeju.api.port.provider
+package imin.jeju.iminjeju.port.provider
 
-import imin.jeju.iminjeju.api.dto.KakaoLocationDto
+import imin.jeju.iminjeju.dto.KakaoLocationDto
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.service.annotation.GetExchange

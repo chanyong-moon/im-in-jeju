@@ -1,10 +1,10 @@
-package imin.jeju.iminjeju.api.domain
+package imin.jeju.iminjeju.domain
 
-import imin.jeju.iminjeju.api.dto.Location
+import imin.jeju.iminjeju.dto.LocationDto
 import imin.jeju.iminjeju.extentions.trimTags
-import imin.jeju.iminjeju.api.port.LocationSearchPort
-import imin.jeju.iminjeju.api.port.LocationProviderPort
-import imin.jeju.iminjeju.counter.port.TopSearchedViewCounterPort
+import imin.jeju.iminjeju.port.LocationSearchPort
+import imin.jeju.iminjeju.port.LocationProviderPort
+import imin.jeju.iminjeju.port.TopSearchedViewCounterPort
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 
@@ -14,7 +14,7 @@ class LocationSearchService(
     val providers: List<LocationProviderPort>,
     val topSearchedViewCounterPort: TopSearchedViewCounterPort,
 ) : LocationSearchPort {
-    override fun search(keyword: String): List<Location> {
+    override fun search(keyword: String): List<LocationDto> {
         // 검색
         val locationSetList = providers.map { provider ->
             return@map provider.locations(keyword)
@@ -30,7 +30,7 @@ class LocationSearchService(
 
     private fun normalizeName(name: String): String = name.trim().trimTags()
 
-    private fun locations(locationList: List<Location>): List<Location> {
+    private fun locations(locationList: List<LocationDto>): List<LocationDto> {
         val commonLocationNames = findCommonLocationNames(locationList)
 
         val commonLocations = findCommonLocations(locationList.asSequence(), commonLocationNames)
@@ -42,7 +42,7 @@ class LocationSearchService(
         return commonLocations + restLocations
     }
 
-    private fun findCommonLocations(locationList: Sequence<Location>, commonLocationNames: Set<String>): List<Location> {
+    private fun findCommonLocations(locationList: Sequence<LocationDto>, commonLocationNames: Set<String>): List<LocationDto> {
         return locationList
             .filter { it.name in commonLocationNames }
             .distinctBy { it.name }
@@ -50,7 +50,7 @@ class LocationSearchService(
             .toList()
     }
 
-    private fun findCommonLocationNames(locationList: List<Location>): Set<String> {
+    private fun findCommonLocationNames(locationList: List<LocationDto>): Set<String> {
         return locationList
             .groupingBy { it.name }
             .eachCount()

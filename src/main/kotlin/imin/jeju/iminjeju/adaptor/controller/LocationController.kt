@@ -1,9 +1,9 @@
-package imin.jeju.iminjeju.api.adaptor.controller
+package imin.jeju.iminjeju.adaptor.controller
 
-import imin.jeju.iminjeju.api.dto.Location
-import imin.jeju.iminjeju.api.dto.Rank
-import imin.jeju.iminjeju.api.port.LocationSearchPort
-import imin.jeju.iminjeju.counter.port.TopSearchedViewCounterPort
+import imin.jeju.iminjeju.dto.LocationDto
+import imin.jeju.iminjeju.dto.RankDto
+import imin.jeju.iminjeju.port.LocationSearchPort
+import imin.jeju.iminjeju.port.TopSearchedViewCounterPort
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -16,12 +16,12 @@ class LocationController(
     val topSearchedViewCounterPort: TopSearchedViewCounterPort,
 ) {
     @GetMapping("/search")
-    fun searchLocations(@RequestParam keyword: String): List<Location> {
+    fun searchLocations(@RequestParam keyword: String): List<LocationDto> {
         return locationSearchPort.search(keyword)
     }
 
     @GetMapping("/rank")
-    fun getRank(): List<Rank> {
+    fun getRank(): List<RankDto> {
         return topSearchedViewCounterPort.findTopSearchedKeywords()
     }
 }

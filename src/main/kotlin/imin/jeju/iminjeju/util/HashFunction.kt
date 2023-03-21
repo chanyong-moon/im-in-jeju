@@ -1,4 +1,4 @@
-package imin.jeju.iminjeju.counter.util
+package imin.jeju.iminjeju.util
 
 class HashFunction {
     fun hash(item: String, count: Int, size: Int): IntArray {
