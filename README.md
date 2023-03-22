@@ -10,7 +10,9 @@
 # 애플리케이션 실행
 ./gradlew :bootRun
 
-# root 폴더의 rest-api.http를 사용하여 테스트  
+# root 폴더의 rest-api.http를 사용하여 테스트
+
+# 1분마다 랭크가 달라지도록 설정해놓아서 사용하시는 redis 클라이언트가 있다면 localhost:6379로 연결하여 보시면 편하실듯 합니다.     
 ```
 
 # Index
