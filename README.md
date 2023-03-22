@@ -39,7 +39,7 @@
 
 # 구조
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/00b4ea76-c694-4bd5-a511-62cf0a0a87ad/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/128310283/226792269-3f30a529-f3ae-4f38-8a9f-3508a7b36b50.png)
 
 - 헥사고날 아키텍쳐로 구현
 
@@ -88,7 +88,7 @@
 
 # 기능 구현
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3f753531-616d-4cdb-8efc-732ffe867bac/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/128310283/226792313-baf73930-e72a-4aed-aa4f-1ec1de73b0de.png)
 
 `imin.jeju.rank.depth, imin.jeju.rank.width`: Count-Min Sketch 사이즈
 
@@ -151,7 +151,7 @@
 
 단순한 CMS의 경우 런타임 동안의 빈도를 체크하여 일정시간동안의 검색된 횟수를 구현하려면 슬라이딩 윈도우 기법을 넣어야 했습니다.
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/349c143e-aecd-4db0-b939-244e440564d9/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/128310283/226792350-6f1ecb5f-058e-4b1a-92f1-54b36f8a0352.png)
 
 위와 같이 단순히 하나의 CMS를 사용하는 경우에는 서비스 타임의 모든 요청의 키워드의 검색된 횟수가 누적됩니다.
 
@@ -160,7 +160,7 @@
 
 **슬라이딩 윈도우 적용**
 
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/91398195-fc98-411e-ba38-04707f07100a/Untitled.png)
+![Untitled](https://user-images.githubusercontent.com/128310283/226792367-7fb5fb33-6a2e-4f17-8d16-f74c4921b264.png)
 
 요청의 시간에따라 조횟수를 증가하는 CMS가 다릅니다.
 
