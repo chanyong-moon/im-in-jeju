@@ -1,5 +1,3 @@
-# [사전과제] **서버 개발자 - 데이터플랫폼_문찬용**
-
 | Github | https://github.com/chanyong-moon/im-in-jeju (여행중이었어서..) |
 | --- | --- |
 | 키워드 | #헥사고날_아키텍쳐 #확률적_자료구조론(probabilistic_data_structures) #Count-Min_Sketch #Redis #Http_Interface |
