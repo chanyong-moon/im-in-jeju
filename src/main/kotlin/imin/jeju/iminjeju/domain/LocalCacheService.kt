@@ -22,7 +22,6 @@ class LocalCacheService(
             .map { it.keyword }
             .forEach { keyword ->
                 cache?.put(keyword, locationSearchPort.search(keyword, false)?.toTypedArray())
-                println(cache?.get(keyword, Array<LocationDto>::class.java)?.toList())
             }
     }
 
