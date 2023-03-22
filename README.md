@@ -5,6 +5,14 @@
 | 키워드 | #헥사고날_아키텍쳐 #확률적_자료구조론(probabilistic_data_structures) #Count-Min_Sketch #Redis #Http_Interface |
 | 노션 | https://www.notion.so/_-58449f1587a9401a94c97f0b2f612b5c |
 
+# 테스트 방법 
+```shell
+# 애플리케이션 실행
+./gradlew :bootRun
+
+# root 폴더의 rest-api.http를 사용하여 테스트  
+```
+
 # Index
 
 1. [들어가기에 앞서](https://www.notion.so/_-58449f1587a9401a94c97f0b2f612b5c)
