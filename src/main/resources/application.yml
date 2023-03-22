@@ -5,10 +5,10 @@ imin:
       max-result-size: 10
       provider:
         kakao:
-          request-size: 5
+          request-size: 5 # 요청 한번에 응답받을 사이즈
           api-key: KakaoAK e140ea5e34746b9778dccd2631b382d3
         naver:
-          request-size: 5
+          request-size: 5 # 요청 한번에 응답받을 사이즈
           api-key: kvN88UoRxdxW6rpFYivh
           secret: 8PpQMn8C0W
 
