@@ -2,7 +2,7 @@ package imin.jeju.iminjeju.port
 
 import imin.jeju.iminjeju.dto.RankDto
 
-interface TopSearchedViewCounterPort {
+interface LocationRankPort {
     fun increaseViewCount(keyword: String): Long
 
     fun findTopSearchedKeywords(): List<RankDto>

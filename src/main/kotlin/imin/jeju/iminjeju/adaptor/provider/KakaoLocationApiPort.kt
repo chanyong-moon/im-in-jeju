@@ -1,4 +1,4 @@
-package imin.jeju.iminjeju.port.provider
+package imin.jeju.iminjeju.adaptor.provider
 
 import imin.jeju.iminjeju.dto.KakaoLocationDto
 import org.springframework.web.bind.annotation.RequestHeader

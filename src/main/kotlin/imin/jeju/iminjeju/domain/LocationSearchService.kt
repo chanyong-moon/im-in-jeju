@@ -4,7 +4,7 @@ import imin.jeju.iminjeju.dto.LocationDto
 import imin.jeju.iminjeju.extentions.trimTags
 import imin.jeju.iminjeju.port.LocationSearchPort
 import imin.jeju.iminjeju.port.LocationProviderPort
-import imin.jeju.iminjeju.port.TopSearchedViewCounterPort
+import imin.jeju.iminjeju.port.LocationRankPort
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Service
@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException
 class LocationSearchService(
     @Value("\${imin.jeju.search.max-result-size: 10}") val totalLocaionCount: Int,
     val providers: List<LocationProviderPort>,
-    val topSearchedViewCounterPort: TopSearchedViewCounterPort,
+    val topSearchedViewCounterPort: LocationRankPort,
 ) : LocationSearchPort {
     override fun search(keyword: String): List<LocationDto> {
         // 검색

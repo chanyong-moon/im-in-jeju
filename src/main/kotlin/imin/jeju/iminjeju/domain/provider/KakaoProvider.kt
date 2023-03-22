@@ -1,7 +1,7 @@
 package imin.jeju.iminjeju.domain.provider
 
 import imin.jeju.iminjeju.dto.LocationDto
-import imin.jeju.iminjeju.port.provider.KakaoLocationApiPort
+import imin.jeju.iminjeju.adaptor.provider.KakaoLocationApiPort
 import imin.jeju.iminjeju.port.LocationProviderPort
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value

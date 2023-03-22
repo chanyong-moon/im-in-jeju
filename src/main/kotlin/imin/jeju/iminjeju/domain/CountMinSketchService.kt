@@ -1,7 +1,7 @@
 package imin.jeju.iminjeju.domain
 
 import imin.jeju.iminjeju.dto.RankDto
-import imin.jeju.iminjeju.port.TopSearchedViewCounterPort
+import imin.jeju.iminjeju.port.LocationRankPort
 import imin.jeju.iminjeju.util.HashFunction
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.redis.core.RedisTemplate
@@ -21,36 +21,36 @@ class CountMinSketchService(
     @Value("\${imin.jeju.rank.ranking-size}") val rankingSize: Long,
     val cmsRedisTemplate: RedisTemplate<String, Int>,
     val redisTemplate: RedisTemplate<String, String>,
-) : TopSearchedViewCounterPort {
+) : LocationRankPort {
     private val hashFunction: HashFunction = HashFunction()
 
     override fun increaseViewCount(keyword: String): Long {
         val hashes = hashFunction.hash(keyword, depth, width)
-        var cnt = Long.MAX_VALUE
-
+        var totalCount = Long.MAX_VALUE
+        var currentCount = Long.MAX_VALUE
+        val sketch = sketchName()
         val indexes = (0 until depth).map { it to hashes[it] }
 
         with(indexes) {
             // update total sketch
             map { "$TOTAL_COUNT_SKETCH:${it.first}:${it.second}" }
                 .forEach {
-                    cnt = minOf(cmsRedisTemplate.opsForValue().increment(it) ?: 1, cnt)
+                    totalCount = minOf(cmsRedisTemplate.opsForValue().increment(it) ?: 1, totalCount)
                 }
 
             // update each sketch
-            val sketch = sketchName()
             forEach { (i, j) ->
-                cmsRedisTemplate.opsForValue().increment("${sketch}:diff:$i:$j")
+                currentCount = minOf(cmsRedisTemplate.opsForValue().increment("${sketch}:diff:$i:$j") ?: 1, currentCount)
             }
         }
 
         // update total:rank
-        updateRank(keyword, cnt)
+        updateRank(keyword, totalCount)
 
         // {sketchName}:rank
-        updateRank(keyword, cnt, sketchName())
+        updateRank(keyword, currentCount, sketch)
 
-        return cnt
+        return totalCount
     }
 
     private fun updateRank(keyword: String, cnt: Long, sketch: String = "total") {
