@@ -16,7 +16,7 @@ class LocationSearchService(
     val providers: List<LocationProviderPort>,
     val topSearchedViewCounterPort: LocationRankPort,
 ) : LocationSearchPort {
-    override fun search(keyword: String): List<LocationDto> {
+    override fun search(keyword: String, increaseCount: Boolean): List<LocationDto> {
         // 검색
         val locationSetList = providers.map { provider ->
             return@map provider.locations(keyword)
@@ -29,7 +29,7 @@ class LocationSearchService(
             throw ResponseStatusException(HttpStatusCode.valueOf(500), "모든 location provider를 이용할 수 없습니다.")
         }
 
-        topSearchedViewCounterPort.increaseViewCount(keyword)
+        if (increaseCount) topSearchedViewCounterPort.increaseViewCount(keyword)
         return locations(locationSetList.filterNotNull().flatten())
     }
 

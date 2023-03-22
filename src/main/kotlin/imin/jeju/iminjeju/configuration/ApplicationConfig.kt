@@ -5,9 +5,6 @@ import imin.jeju.iminjeju.domain.provider.NaverProvider
 import imin.jeju.iminjeju.port.LocationProviderPort
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.scheduling.annotation.EnableScheduling
-
-@EnableScheduling
 @Configuration
 class ApplicationConfig {
     @Bean

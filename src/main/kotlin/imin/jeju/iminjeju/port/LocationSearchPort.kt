@@ -5,5 +5,5 @@ import org.springframework.stereotype.Service
 
 @Service
 interface LocationSearchPort {
-    fun search(keyword: String): List<LocationDto>
+    fun search(keyword: String, increaseCount: Boolean): List<LocationDto>
 }

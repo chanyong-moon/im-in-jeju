@@ -79,8 +79,7 @@ class CountMinSketchService(
             .mapNotNull { tup -> if (tup.value != null && tup.score != null) RankDto(tup.value!!, tup.score!!.toLong()) else null }
     }
 
-    @Scheduled(cron = "1 */\${imin.jeju.rank.minute-threshold} * * * *")
-    fun updateSketch() {
+    override fun updateRanking() {
         val removeDiff = "${sketchName(LocalDateTime.now().minusMinutes(minuteThreshold.toLong() * (cacheTimes)))}:diff"
 
         // update sketch
